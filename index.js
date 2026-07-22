@@ -43,29 +43,54 @@ function addAllPreviews() {
     });
 }
 
+class previewElement {
+    constructor(ingredient) {
+        this.element = document.createElement('img');
+        this.element.style.display = 'none';
+        this.element.className = 'preview';
+        this.element.src = ingredient;
+    }
+
+    position(x, y) {
+        this.element.style.left = `${x}px`;
+        this.element.style.top = `${y}px`;
+    }
+
+    getDisplay() {
+        return this.element.style.display;
+    }
+
+    display(value) {
+        this.element.style.display = value;
+    }
+    
+    render(parentElement) {
+        parentElement.appendChild(this.element);
+    }
+
+    remove() {
+        this.element.remove();
+    }
+}
+
 function addPreview(elementID) {
     let preview;
     let isHovering = false;
     let elm = document.getElementById(elementID);
     elm.addEventListener('mouseenter', async () => {
-        preview = document.createElement('img');
-        preview.style.display = 'none';
-        preview.className = 'preview';
-        preview.rel = 'preload';
-        preview.src = ingredients[elementID];
-        document.body.appendChild(preview);
+        preview = new previewElement(ingredients[elementID]);
+        preview.render(document.body);
         isHovering = true;
         while (isHovering) {
             await new Promise(resolve => setTimeout(resolve, 0.1));
-            preview.style.left = `${mousePosX}px`;
-            preview.style.top = `${mousePosY}px`;
-            if (preview.style.display == 'none') {
-                preview.style.display = 'revert';
+            preview.position(mousePosX, mousePosY);
+            if (preview.getDisplay() == 'none') {
+                preview.display('revert');
             }
         }
     });
     elm.addEventListener('mouseleave', () => {
-        preview.style.display = 'none';
+        preview.display('none');
         isHovering = false;
         preview.remove();
     });
