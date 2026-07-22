@@ -59,8 +59,9 @@ class previewElement {
     display(value) {
         if (value == null) {
             return this.element.style.display;
+        } else {
+            this.element.style.display = value;
         }
-        this.element.style.display = value;
     }
     
     render(parentElement) {
