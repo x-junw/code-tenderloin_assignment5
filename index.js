@@ -56,11 +56,10 @@ class previewElement {
         this.element.style.top = `${y}px`;
     }
 
-    getDisplay() {
-        return this.element.style.display;
-    }
-
     display(value) {
+        if (value == null) {
+            return this.element.style.display;
+        }
         this.element.style.display = value;
     }
     
@@ -84,7 +83,7 @@ function addPreview(elementID) {
         while (isHovering) {
             await new Promise(resolve => setTimeout(resolve, 0.1));
             preview.position(mousePosX, mousePosY);
-            if (preview.getDisplay() == 'none') {
+            if (preview.display() == 'none') {
                 preview.display('revert');
             }
         }
