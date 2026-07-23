@@ -74,6 +74,10 @@ hr {
     cursor: none;
 }
 
+#ingredients span:hover {
+    font-weight: bold;
+}
+
 ul {
     display: flex;
     justify-content: center;
